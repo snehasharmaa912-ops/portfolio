@@ -1,18 +1,60 @@
-// ============ SPLASH ============
+// ============ SPLASH: crack open + reveal ============
 window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
-  setTimeout(() => splash.classList.add('hide'), 2000);
+  setTimeout(() => splash.classList.add('crack-open'), 1900);
+  setTimeout(() => splash.classList.add('hide'), 2550);
+  setTimeout(() => startTypewriter(), 2600);
 });
 
-// ============ CUSTOM CURSOR ============
+// ============ TYPEWRITER TAGLINE ============
+function startTypewriter(){
+  const el = document.getElementById('typewriterTarget');
+  if (!el) return;
+  const full = el.getAttribute('data-full-text') || el.textContent;
+  el.textContent = '';
+  el.style.borderRight = '2px solid #c9a227';
+  let i = 0;
+  function type(){
+    if (i <= full.length){
+      el.textContent = full.slice(0, i);
+      i++;
+      setTimeout(type, 14);
+    } else {
+      setTimeout(() => { el.style.borderRight = 'none'; }, 400);
+    }
+  }
+  type();
+}
+
+// ============ CUSTOM CURSOR + GOLD DUST TRAIL ============
 const dot = document.getElementById('cursorDot');
 const ring = document.getElementById('cursorRing');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+let lastDust = 0;
 
 window.addEventListener('mousemove', (e) => {
   mouseX = e.clientX; mouseY = e.clientY;
   dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px';
+
+  const now = Date.now();
+  if (now - lastDust > 45) {
+    lastDust = now;
+    spawnDust(mouseX, mouseY);
+  }
 });
+
+function spawnDust(x, y){
+  const d = document.createElement('div');
+  d.className = 'dust';
+  const dx = (Math.random() - 0.5) * 30;
+  const dy = -20 - Math.random() * 30;
+  d.style.setProperty('--dx', dx + 'px');
+  d.style.setProperty('--dy', dy + 'px');
+  d.style.left = x + 'px';
+  d.style.top = y + 'px';
+  document.body.appendChild(d);
+  setTimeout(() => d.remove(), 950);
+}
 
 function animateRing(){
   ringX += (mouseX - ringX) * 0.15;
@@ -22,7 +64,7 @@ function animateRing(){
 }
 animateRing();
 
-document.querySelectorAll('a, button, .chip, .cert-card, .project-card, .skill-tags span').forEach(el => {
+document.querySelectorAll('a, button, .chip, .cert-card, .project-card, .skill-tags span, .p-visual').forEach(el => {
   el.addEventListener('mouseenter', () => ring.classList.add('hover'));
   el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
 });
@@ -64,15 +106,70 @@ revealEls.forEach(el => io.observe(el));
 // ============ TILT ON PROJECT CARDS ============
 document.querySelectorAll('.tilt').forEach(card => {
   card.addEventListener('mousemove', (e) => {
+    if (card.classList.contains('flipped')) return;
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
     const y = (e.clientY - r.top) / r.height - 0.5;
-    card.style.transform = `perspective(1000px) rotateY(${x*4}deg) rotateX(${-y*4}deg) translateY(-4px)`;
+    card.style.transform = `perspective(1400px) rotateY(${x*4}deg) rotateX(${-y*4}deg) translateY(-4px)`;
   });
   card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) translateY(0)';
+    card.style.transform = 'perspective(1400px) rotateY(0) rotateX(0) translateY(0)';
   });
 });
+
+// ============ PARALLAX ============
+const parallaxEls = document.querySelectorAll('.parallax-el');
+function updateParallax(){
+  const scrollY = window.scrollY;
+  parallaxEls.forEach(el => {
+    const speed = parseFloat(el.getAttribute('data-speed')) || 0.2;
+    el.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+  requestAnimationFrame(updateParallax);
+}
+updateParallax();
+
+// ============ AMBIENT FLOATING GOLD PARTICLES (canvas) ============
+(() => {
+  const canvas = document.getElementById('ambientCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles;
+
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function makeParticles(n){
+    return Array.from({length: n}, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 0.6 + Math.random() * 1.6,
+      vy: -0.08 - Math.random() * 0.18,
+      vx: (Math.random() - 0.5) * 0.06,
+      alpha: 0.15 + Math.random() * 0.35,
+    }));
+  }
+  particles = makeParticles(46);
+
+  function draw(){
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => {
+      p.y += p.vy; p.x += p.vx;
+      if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,162,39,${p.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
 // ============ LIVE GITHUB STATS ============
 (async () => {
