@@ -188,15 +188,17 @@ updateParallax();
   const el = document.getElementById('statLeetcode');
   const username = 'snehasharma08';
   const endpoints = [
-    `https://leetcode-stats-api.herokuapp.com/${username}`,
-    `https://alfa-leetcode-api.onrender.com/${username}/solved`
+    { url: `https://leetcode-stats.tashif.codes/${username}`, field: 'totalSolved' },
+    { url: `https://alfa-leetcode-api.onrender.com/${username}/solved`, field: 'solvedProblem' },
+    { url: `https://leetcode-stats-api.herokuapp.com/${username}`, field: 'totalSolved' },
   ];
-  for (const url of endpoints) {
+  for (const ep of endpoints) {
     try {
-      const res = await fetch(url);
+      const res = await fetch(ep.url);
+      if (!res.ok) continue;
       const data = await res.json();
-      const solved = data.totalSolved || data.solvedProblem || null;
-      if (solved) { animateCount(el, solved); return; }
+      const solved = data[ep.field];
+      if (typeof solved === 'number' && solved >= 0) { animateCount(el, solved); return; }
     } catch (e) { /* try next endpoint */ }
   }
   el.textContent = '—';
