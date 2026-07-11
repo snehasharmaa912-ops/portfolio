@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SheSays — Case Study | Sneha Sharma</title>
+<link rel="stylesheet" href="casestudy.css">
+</head>
+<body>
+
+<nav class="cs-nav">
+  <div class="brand"><span class="mono">S</span> Sneha Sharma</div>
+  <a class="back" href="index.html#projects">← Back to Portfolio</a>
+</nav>
+
+<div class="cs-wrap">
+  <div class="cs-eyebrow">Case Study · 01</div>
+  <h1 class="cs-title">SheSays</h1>
+  <p class="cs-tag">A safe room for stories that don't get told anywhere else.</p>
+
+  <div class="cs-meta">
+    <div>Role<strong>Solo Developer</strong></div>
+    <div>Stack<strong>MERN</strong></div>
+    <div>Status<strong>Live, Deployed</strong></div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Problem</div>
+    <p>Most community platforms treat every post the same way — public, permanent, and attached to your real identity. For sensitive personal stories, that's exactly the wrong default. Women wanting to share experiences around harassment, mental health, or family pressure often have nowhere that feels safe: not a public feed, not a comment section under a stranger's post.</p>
+    <p>SheSays was built to answer a narrow question: what does a blogging platform look like if "safety" is the first design constraint, not an afterthought?</p>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Approach</div>
+    <p>I built SheSays as a full MERN application with a deliberately simple core: authenticated accounts, a clean writing flow, and a like/comment system that encourages support rather than debate.</p>
+    <ul>
+      <li>JWT-based authentication so accounts are secure without forcing unnecessary personal data collection</li>
+      <li>Cloudinary integration for media uploads, keeping the app fast and the database lean</li>
+      <li>A comment and like system designed around affirmation, not virality</li>
+      <li>Deployed as a real production app — not a local demo — so it could actually be used</li>
+    </ul>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">Architecture</div>
+    <div class="cs-arch">Client (React)  ──►  Express API  ──►  MongoDB Atlas
+     │                     │
+     ▼                     ▼
+ Auth Context          JWT Middleware
+     │                     │
+     ▼                     ▼
+ Post Editor  ──►  Cloudinary (media)</div>
+    <div class="cs-stack">
+      <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>JWT</span><span>Cloudinary</span><span>Vercel</span><span>Render</span>
+    </div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">Outcome &amp; Honest Limits</div>
+    <p>The app is live and functional end to end — signup, posting, media, likes, comments, all working in production. What it doesn't have yet: moderation tooling and true anonymous posting (accounts are currently tied to email). Those are the two things I'd build next if this became a real product rather than a portfolio piece — and I say that here instead of pretending v1 is finished.</p>
+  </div>
+
+  <div class="cs-cta">
+    <a class="cs-btn" href="https://github.com/snehasharmaa912-ops/SheSays" target="_blank" rel="noopener">View Source ↗</a>
+    <a class="cs-btn ghost" href="index.html#projects">← All Projects</a>
+  </div>
+</div>
+
+<footer class="cs-footer">Sneha Sharma · © 2026</footer>
+</body>
+</html>
