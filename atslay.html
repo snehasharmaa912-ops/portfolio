@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATSlay — Case Study | Sneha Sharma</title>
+<link rel="stylesheet" href="casestudy.css">
+</head>
+<body>
+
+<nav class="cs-nav">
+  <div class="brand"><span class="mono">S</span> Sneha Sharma</div>
+  <a class="back" href="index.html#projects">← Back to Portfolio</a>
+</nav>
+
+<div class="cs-wrap">
+  <div class="cs-eyebrow">Case Study · 02</div>
+  <h1 class="cs-title">ATSlay</h1>
+  <p class="cs-tag">An ATS score you can actually argue with — because it shows its work.</p>
+
+  <div class="cs-meta">
+    <div>Role<strong>Solo Developer</strong></div>
+    <div>Stack<strong>Python · NLP</strong></div>
+    <div>Status<strong>Live, Dockerized</strong></div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Problem</div>
+    <p>Most ATS resume checkers hand you a percentage and nothing else — a black-box score with no explanation of what to fix. That's frustrating for candidates and, frankly, not very honest engineering: if you can't show your work, the number isn't trustworthy.</p>
+    <p>ATSlay exists to fix that: same core idea as a resume-matching tool, but with the reasoning made visible.</p>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Approach</div>
+    <p>Instead of calling an external LLM API to "judge" a resume, I built the scoring engine from real NLP fundamentals — so the output is deterministic, explainable, and free to run at scale.</p>
+    <ul>
+      <li>TF-IDF vectorization of both the resume and job description</li>
+      <li>Cosine similarity to compute a match score between the two vectors</li>
+      <li>Porter stemming to normalize word forms before comparison (so "managing" and "managed" count as a match)</li>
+      <li>The output highlights exactly which keywords are missing — not just a score</li>
+      <li>Full auth system with scan history, so users can track improvement over multiple resume versions</li>
+    </ul>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">Architecture</div>
+    <div class="cs-arch">Resume + JD Input
+        │
+        ▼
+  Text Preprocessing (stemming, stopword removal)
+        │
+        ▼
+  TF-IDF Vectorization ──► Cosine Similarity Score
+        │
+        ▼
+  Missing Keyword Extraction ──► Stored in Scan History (per user)
+        │
+        ▼
+  Dockerized API + Auth Layer</div>
+    <div class="cs-stack">
+      <span>Python</span><span>NLP</span><span>TF-IDF</span><span>Cosine Similarity</span><span>Porter Stemmer</span><span>JWT</span><span>Docker</span>
+    </div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">Outcome &amp; Honest Limits</div>
+    <p>The scoring pipeline works end to end and is genuinely explainable — you can trace exactly why a score came out the way it did. What it doesn't yet handle well: resumes with heavy graphic/table-based formatting (parsing accuracy drops), and it doesn't account for years-of-experience weighting the way a human recruiter would. Both are on my list, not hidden from the pitch.</p>
+  </div>
+
+  <div class="cs-cta">
+    <a class="cs-btn" href="https://github.com/snehasharmaa912-ops/ATSlay" target="_blank" rel="noopener">View Source ↗</a>
+    <a class="cs-btn ghost" href="index.html#projects">← All Projects</a>
+  </div>
+</div>
+
+<footer class="cs-footer">Sneha Sharma · © 2026</footer>
+</body>
+</html>
