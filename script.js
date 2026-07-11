@@ -1,3 +1,49 @@
+// ============ TIMELINE SCRUBBER ============
+(() => {
+  const slider = document.getElementById('journeySlider');
+  const fill = document.getElementById('scrubberFill');
+  const yearEl = document.getElementById('scrubberYear');
+  const textEl = document.getElementById('scrubberText');
+  const ticks = document.querySelectorAll('.scrubber-ticks span');
+  if (!slider) return;
+
+  const milestones = {
+    0: { year: '2021', text: "Started Secondary Education at Manava Bharati India International School." },
+    1: { year: '2022', text: "Completed Secondary Education with 87.83% — first real proof that consistency pays off." },
+    2: { year: '2023', text: "Began Senior Secondary education in PCM + Computer Science, and took on the role of Discipline Incharge at school." },
+    3: { year: '2024', text: "Graduated Senior Secondary with First Division. Started B.Tech in Computer Science & Engineering at Graphic Era Hill University — joined NSS GEHU and Team Aryavart." },
+    4: { year: '2025', text: "Earned AWS Cloud Practitioner Essentials (Feb) and the AWS AI Practitioner Learning Plan (Sep) — building a cloud and AI foundation alongside coursework." },
+    5: { year: '2026', text: "Interning at TBI-GEU and Mirai School of Technology, shipping SheSays, ATSlay, and VibeOps, and completing three Forage job simulations." },
+  };
+
+  function update(){
+    const val = parseInt(slider.value, 10);
+    const pct = (val / 5) * 100;
+    fill.style.width = pct + '%';
+    const m = milestones[val];
+    yearEl.textContent = m.year;
+    textEl.textContent = m.text;
+    ticks.forEach((t, i) => t.classList.toggle('active', i === val));
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+
+// ============ FOOTER SIGNATURE REVEAL ============
+(() => {
+  const sig = document.getElementById('footerSignature');
+  if (!sig) return;
+  const io2 = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        sig.classList.add('signed');
+        io2.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  io2.observe(sig);
+})();
+
 // ============ SPLASH: crack open + reveal ============
 window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
