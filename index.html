@@ -336,6 +336,26 @@
   .stat-card{
     background:var(--ink);padding:36px 24px;text-align:center;
   }
+  .stats-note{
+    max-width:720px;margin:28px auto 0;text-align:center;font-family:var(--serif-italic);
+    font-style:italic;font-size:14px;color:var(--ivory-dim);line-height:1.7;
+  }
+  .heatmap-panel{margin-top:60px;border:1px solid var(--hairline);padding:32px 36px;background:var(--ink);}
+  .heatmap-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:22px;}
+  .heatmap-title{font-family:var(--serif);font-size:20px;color:var(--gold-bright);}
+  .heatmap-sub{font-size:12px;color:var(--ivory-dim);margin-top:4px;}
+  .heatmap-legend{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ivory-dim);}
+  .heatmap-grid{
+    display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;
+    overflow-x:auto;padding-bottom:6px;
+  }
+  .hm-cell{width:11px;height:11px;background:var(--ink-3);border-radius:2px;flex-shrink:0;}
+  .hm-cell[data-level="0"]{background:var(--ink-3);}
+  .hm-cell[data-level="1"]{background:#4a3d1a;}
+  .hm-cell[data-level="2"]{background:#7a641f;}
+  .hm-cell[data-level="3"]{background:#a6862a;}
+  .hm-cell[data-level="4"]{background:var(--gold-bright);}
+  @media(max-width:700px){.heatmap-panel{padding:24px 20px;}}
   .stat-num{
     font-family:var(--serif);font-size:clamp(30px,3vw,44px);color:var(--gold-bright);
     font-weight:700;
@@ -401,6 +421,11 @@
   .p-index{
     font-family:var(--serif);font-size:120px;color:var(--gold-dim);opacity:.35;
     position:relative;z-index:1;
+  }
+  .p-visual-name{
+    position:absolute;top:24px;left:28px;z-index:2;
+    font-family:var(--serif-italic);font-style:italic;font-size:16px;
+    letter-spacing:1px;color:var(--gold-bright);text-transform:uppercase;
   }
   .flip-hint{
     position:absolute;bottom:14px;right:16px;font-size:10px;letter-spacing:2px;
@@ -612,6 +637,26 @@
       <div class="stat-sub">AWS &amp; Forage</div>
     </div>
   </div>
+  <p class="stats-note reveal">Note on method: I solve most problems offline in a notebook first, then batch-push verified solutions to LeetCode — so the solved count above will often outpace my visibly "active" days on the platform itself.</p>
+
+  <div class="heatmap-panel reveal">
+    <div class="heatmap-header">
+      <div>
+        <div class="heatmap-title">GitHub Activity</div>
+        <div class="heatmap-sub" id="heatmapSub">Loading commit history…</div>
+      </div>
+      <div class="heatmap-legend">
+        <span>Less</span>
+        <span class="hm-cell" data-level="0"></span>
+        <span class="hm-cell" data-level="1"></span>
+        <span class="hm-cell" data-level="2"></span>
+        <span class="hm-cell" data-level="3"></span>
+        <span class="hm-cell" data-level="4"></span>
+        <span>More</span>
+      </div>
+    </div>
+    <div id="heatmapGrid" class="heatmap-grid"></div>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -658,7 +703,7 @@
     <div class="project-card tilt reveal" id="cardSheSays">
       <div class="card-inner">
         <div class="card-face front">
-          <div class="p-visual" onclick="document.getElementById('cardSheSays').classList.toggle('flipped')"><div class="p-index">01</div><div class="flip-hint">Tap to flip ⟲</div></div>
+          <div class="p-visual" onclick="document.getElementById('cardSheSays').classList.toggle('flipped')"><div class="p-index">01</div><div class="p-visual-name">SheSays</div><div class="flip-hint">Tap to flip ⟲</div></div>
           <div class="p-body">
             <div class="p-name">SheSays</div>
             <div class="p-tag">MERN · Community Platform</div>
@@ -668,6 +713,7 @@
               <span class="chip">MongoDB</span><span class="chip">JWT</span><span class="chip">Cloudinary</span>
             </div>
             <div class="p-links">
+              <a href="shesays.html">Case Study →</a>
               <a href="https://github.com/snehasharmaa912-ops/SheSays" target="_blank" rel="noopener">GitHub ↗</a>
             </div>
           </div>
@@ -683,7 +729,7 @@
     <div class="project-card tilt flip reveal" id="cardATSlay">
       <div class="card-inner">
         <div class="card-face front">
-          <div class="p-visual" onclick="document.getElementById('cardATSlay').classList.toggle('flipped')"><div class="p-index">02</div><div class="flip-hint">Tap to flip ⟲</div></div>
+          <div class="p-visual" onclick="document.getElementById('cardATSlay').classList.toggle('flipped')"><div class="p-index">02</div><div class="p-visual-name">ATSlay</div><div class="flip-hint">Tap to flip ⟲</div></div>
           <div class="p-body">
             <div class="p-name">ATSlay</div>
             <div class="p-tag">AI · NLP Resume Analyzer</div>
@@ -693,6 +739,7 @@
               <span class="chip">Docker</span><span class="chip">JWT</span>
             </div>
             <div class="p-links">
+              <a href="atslay.html">Case Study →</a>
               <a href="https://github.com/snehasharmaa912-ops/ATSlay" target="_blank" rel="noopener">GitHub ↗</a>
             </div>
           </div>
@@ -708,7 +755,7 @@
     <div class="project-card tilt reveal" id="cardVibeOps">
       <div class="card-inner">
         <div class="card-face front">
-          <div class="p-visual" onclick="document.getElementById('cardVibeOps').classList.toggle('flipped')"><div class="p-index">03</div><div class="flip-hint">Tap to flip ⟲</div></div>
+          <div class="p-visual" onclick="document.getElementById('cardVibeOps').classList.toggle('flipped')"><div class="p-index">03</div><div class="p-visual-name">VibeOps</div><div class="flip-hint">Tap to flip ⟲</div></div>
           <div class="p-body">
             <div class="p-name">VibeOps</div>
             <div class="p-tag">AI · Multi-Agent Orchestration</div>
@@ -718,6 +765,7 @@
               <span class="chip">ChromaDB</span><span class="chip">Streamlit</span><span class="chip">GitHub Actions</span>
             </div>
             <div class="p-links">
+              <a href="vibeops.html">Case Study →</a>
               <a href="https://github.com/snehasharmaa912-ops/VibeOps" target="_blank" rel="noopener">GitHub ↗</a>
             </div>
           </div>
