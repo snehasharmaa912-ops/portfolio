@@ -183,6 +183,34 @@ updateParallax();
   }
 })();
 
+// ============ GITHUB COMMIT HEATMAP ============
+(async () => {
+  const grid = document.getElementById('heatmapGrid');
+  const sub = document.getElementById('heatmapSub');
+  const username = 'snehasharmaa912-ops';
+  try {
+    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
+    if (!res.ok) throw new Error('bad response');
+    const data = await res.json();
+    const days = data.contributions || [];
+    const totalKey = Object.keys(data.total || {}).pop();
+    const total = totalKey ? data.total[totalKey] : days.reduce((s, d) => s + d.count, 0);
+
+    sub.textContent = `${total} contributions in the last year`;
+
+    grid.innerHTML = '';
+    days.forEach(d => {
+      const cell = document.createElement('div');
+      cell.className = 'hm-cell';
+      cell.setAttribute('data-level', d.level ?? 0);
+      cell.title = `${d.date}: ${d.count} commit${d.count === 1 ? '' : 's'}`;
+      grid.appendChild(cell);
+    });
+  } catch (e) {
+    sub.textContent = 'Commit history unavailable right now — check back later.';
+  }
+})();
+
 // ============ LIVE LEETCODE STATS ============
 (async () => {
   const el = document.getElementById('statLeetcode');
