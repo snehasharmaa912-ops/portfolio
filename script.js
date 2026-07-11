@@ -257,26 +257,91 @@ updateParallax();
   }
 })();
 
-// ============ LIVE LEETCODE STATS ============
+// ============ LIVE LEETCODE STATS + HEATMAP ============
 (async () => {
   const el = document.getElementById('statLeetcode');
+  const lcSub = document.getElementById('lcHeatmapSub');
+  const lcGrid = document.getElementById('lcHeatmapGrid');
   const username = 'snehasharma08';
-  const endpoints = [
-    { url: `https://leetcode-stats.tashif.codes/${username}`, field: 'totalSolved' },
+
+  // Primary: tashif API returns both solved count AND submissionCalendar in one call
+  try {
+    const res = await fetch(`https://leetcode-stats.tashif.codes/${username}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (typeof data.totalSolved === 'number') {
+        animateCount(el, data.totalSolved);
+        if (data.submissionCalendar) {
+          renderLeetcodeHeatmap(data.submissionCalendar, lcGrid, lcSub);
+          return;
+        }
+      }
+    }
+  } catch (e) { /* fall through to fallback endpoints */ }
+
+  // Fallback chain for the solved count only (no heatmap data available)
+  const fallbacks = [
     { url: `https://alfa-leetcode-api.onrender.com/${username}/solved`, field: 'solvedProblem' },
     { url: `https://leetcode-stats-api.herokuapp.com/${username}`, field: 'totalSolved' },
   ];
-  for (const ep of endpoints) {
+  for (const ep of fallbacks) {
     try {
       const res = await fetch(ep.url);
       if (!res.ok) continue;
       const data = await res.json();
       const solved = data[ep.field];
-      if (typeof solved === 'number' && solved >= 0) { animateCount(el, solved); return; }
+      if (typeof solved === 'number' && solved >= 0) {
+        animateCount(el, solved);
+        lcSub.textContent = 'Submission calendar unavailable right now — check back later.';
+        return;
+      }
     } catch (e) { /* try next endpoint */ }
   }
   el.textContent = '—';
+  lcSub.textContent = 'Stats unavailable right now — check back later.';
 })();
+
+function renderLeetcodeHeatmap(calendar, gridEl, subEl){
+  // calendar: { "unixTimestampSeconds": count }
+  const entries = Object.entries(calendar).map(([ts, count]) => ({
+    date: new Date(parseInt(ts, 10) * 1000),
+    count: parseInt(count, 10),
+  }));
+  entries.sort((a, b) => a.date - b.date);
+
+  const total = entries.reduce((s, e) => s + e.count, 0);
+  subEl.textContent = `${total} submissions in the last year`;
+
+  // Build a continuous day-by-day map for the last 365 days for a clean grid
+  const byDate = {};
+  entries.forEach(e => { byDate[e.date.toISOString().slice(0, 10)] = e.count; });
+
+  const today = new Date();
+  const days = [];
+  for (let i = 364; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    days.push({ date: key, count: byDate[key] || 0 });
+  }
+
+  function levelFor(count){
+    if (count === 0) return 0;
+    if (count <= 1) return 1;
+    if (count <= 3) return 2;
+    if (count <= 6) return 3;
+    return 4;
+  }
+
+  gridEl.innerHTML = '';
+  days.forEach(d => {
+    const cell = document.createElement('div');
+    cell.className = 'hm-cell lc';
+    cell.setAttribute('data-level', levelFor(d.count));
+    cell.title = `${d.date}: ${d.count} submission${d.count === 1 ? '' : 's'}`;
+    gridEl.appendChild(cell);
+  });
+}
 
 function animateCount(el, target){
   let current = 0;
