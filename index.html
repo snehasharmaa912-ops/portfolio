@@ -355,6 +355,10 @@
   .hm-cell[data-level="2"]{background:#7a641f;}
   .hm-cell[data-level="3"]{background:#a6862a;}
   .hm-cell[data-level="4"]{background:var(--gold-bright);}
+  .hm-cell.lc[data-level="1"]{background:#3a2a1a;}
+  .hm-cell.lc[data-level="2"]{background:#7a4a1f;}
+  .hm-cell.lc[data-level="3"]{background:#c47a2a;}
+  .hm-cell.lc[data-level="4"]{background:#f2a94e;}
   @media(max-width:700px){.heatmap-panel{padding:24px 20px;}}
   .stat-num{
     font-family:var(--serif);font-size:clamp(30px,3vw,44px);color:var(--gold-bright);
@@ -690,6 +694,25 @@
       </div>
     </div>
     <div id="heatmapGrid" class="heatmap-grid"></div>
+  </div>
+
+  <div class="heatmap-panel reveal" style="margin-top:26px;">
+    <div class="heatmap-header">
+      <div>
+        <div class="heatmap-title">LeetCode Activity</div>
+        <div class="heatmap-sub" id="lcHeatmapSub">Loading submission history…</div>
+      </div>
+      <div class="heatmap-legend">
+        <span>Less</span>
+        <span class="hm-cell lc" data-level="0"></span>
+        <span class="hm-cell lc" data-level="1"></span>
+        <span class="hm-cell lc" data-level="2"></span>
+        <span class="hm-cell lc" data-level="3"></span>
+        <span class="hm-cell lc" data-level="4"></span>
+        <span>More</span>
+      </div>
+    </div>
+    <div id="lcHeatmapGrid" class="heatmap-grid"></div>
   </div>
 </section>
 
