@@ -494,6 +494,40 @@
   .edu-detail{color:var(--ivory-dim);font-size:14px;line-height:1.7;}
   @media(max-width:700px){.edu-item{grid-template-columns:1fr;gap:10px;}}
 
+  /* ============ TIMELINE SCRUBBER ============ */
+  .scrubber-wrap{margin-top:60px;}
+  .scrubber-input{
+    width:100%;-webkit-appearance:none;appearance:none;height:2px;background:var(--hairline);
+    outline:none;margin-bottom:6px;cursor:none;
+  }
+  .scrubber-input::-webkit-slider-thumb{
+    -webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+    background:var(--gold-bright);border:2px solid var(--gold);cursor:none;
+    box-shadow:0 0 12px 2px rgba(201,162,39,0.5);
+  }
+  .scrubber-input::-moz-range-thumb{
+    width:20px;height:20px;border-radius:50%;background:var(--gold-bright);border:2px solid var(--gold);cursor:none;
+  }
+  .scrubber-track{position:relative;margin-bottom:40px;}
+  .scrubber-fill{position:absolute;top:-1px;left:0;height:2px;background:var(--gold);pointer-events:none;transition:width .3s ease;}
+  .scrubber-ticks{display:flex;justify-content:space-between;margin-top:14px;}
+  .scrubber-ticks span{font-size:12px;letter-spacing:1px;color:var(--ivory-dim);transition:color .3s;}
+  .scrubber-ticks span.active{color:var(--gold-bright);font-weight:600;}
+  .scrubber-panel{
+    border:1px solid var(--hairline);padding:32px 36px;background:var(--ink-2);
+    min-height:140px;
+  }
+  .scrubber-year{font-family:var(--serif);font-size:34px;color:var(--gold-bright);margin-bottom:12px;}
+  .scrubber-text{color:var(--ivory-dim);font-size:16px;line-height:1.8;max-width:640px;}
+
+  /* ============ FOOTER SIGNATURE ============ */
+  .signature{
+    font-family:'Cormorant Garamond', cursive;font-style:italic;font-weight:500;
+    font-size:38px;color:var(--gold-bright);display:inline-block;
+    clip-path:inset(0 100% 0 0);transition:clip-path 1.8s cubic-bezier(.4,0,.2,1);
+  }
+  .signature.signed{clip-path:inset(0 0 0 0);}
+
   /* ============ CONTACT / FOOTER ============ */
   #contact{
     text-align:center;padding-top:160px;padding-bottom:80px;
@@ -791,7 +825,7 @@
     <div class="skill-cat reveal">
       <h4>Languages &amp; Core</h4>
       <div class="skill-tags">
-        <span>JavaScript</span><span>Python</span><span>C++</span><span>OOP</span><span>Data Structures &amp; Algorithms</span>
+        <span>JavaScript</span><span>Python</span><span>Java</span><span>C++</span><span>OOP</span><span>Data Structures &amp; Algorithms</span>
       </div>
     </div>
     <div class="skill-cat reveal reveal-delay-1">
@@ -889,6 +923,33 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- TIMELINE SCRUBBER -->
+<section id="journey">
+  <div class="section-frame reveal"><div class="eyebrow">The Journey</div>
+  <h2 class="title">Drag through <em>the timeline</em></h2></div>
+
+  <div class="scrubber-wrap reveal">
+    <input type="range" id="journeySlider" class="scrubber-input" min="0" max="5" step="1" value="5">
+    <div class="scrubber-track">
+      <div class="scrubber-fill" id="scrubberFill"></div>
+      <div class="scrubber-ticks">
+        <span data-year="2021">2021</span>
+        <span data-year="2022">2022</span>
+        <span data-year="2023">2023</span>
+        <span data-year="2024">2024</span>
+        <span data-year="2025">2025</span>
+        <span data-year="2026">2026</span>
+      </div>
+    </div>
+    <div class="scrubber-panel" id="scrubberPanel">
+      <div class="scrubber-year" id="scrubberYear">2026</div>
+      <div class="scrubber-text" id="scrubberText">Interning at TBI-GEU and Mirai School of Technology, shipping SheSays, ATSlay, and VibeOps, and completing three Forage job simulations.</div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="eyebrow reveal">Get In Touch</div>
@@ -906,7 +967,8 @@
 
 <footer>
   <div class="mono-small">S</div>
-  Sneha Sharma &nbsp;·&nbsp; Designed &amp; built from scratch &nbsp;·&nbsp; © 2026
+  <div class="signature" id="footerSignature">Sneha Sharma</div>
+  <div style="margin-top:10px;">Designed &amp; built from scratch &nbsp;·&nbsp; © 2026</div>
 </footer>
 
 <script src="script.js"></script>
