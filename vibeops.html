@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeOps — Case Study | Sneha Sharma</title>
+<link rel="stylesheet" href="casestudy.css">
+</head>
+<body>
+
+<nav class="cs-nav">
+  <div class="brand"><span class="mono">S</span> Sneha Sharma</div>
+  <a class="back" href="index.html#projects">← Back to Portfolio</a>
+</nav>
+
+<div class="cs-wrap">
+  <div class="cs-eyebrow">Case Study · 03</div>
+  <h1 class="cs-title">VibeOps</h1>
+  <p class="cs-tag">The relay I built after getting tired of being the relay myself.</p>
+
+  <div class="cs-meta">
+    <div>Role<strong>Solo Developer</strong></div>
+    <div>Stack<strong>LangGraph · Claude API</strong></div>
+    <div>Status<strong>8/8 Tests Passing, CI</strong></div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Problem</div>
+    <p>Working across multiple AI tools for a single task means constantly copy-pasting context between them — what one agent decided, what it tried, what failed. That manual relay work is exactly the kind of thing that should be automated, and it's a real bottleneck once a workflow needs more than one specialized step.</p>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Approach</div>
+    <p>VibeOps is a multi-agent orchestrator: a graph of specialized agents (built with LangGraph, powered by the Claude API) that pass context to each other automatically instead of through a human intermediary.</p>
+    <ul>
+      <li>Shared memory layer across agents using SQLite (structured state) and ChromaDB (semantic/vector recall)</li>
+      <li>Retry and failure handling built into the graph, so a single agent failure doesn't collapse the whole pipeline</li>
+      <li>A full test suite — 8/8 passing — covering the orchestration logic, not just happy-path demos</li>
+      <li>CI via GitHub Actions, so every push is verified automatically before it's trusted</li>
+      <li>A Streamlit front end for demoing the pipeline interactively</li>
+    </ul>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">Architecture</div>
+    <div class="cs-arch">User Request
+     │
+     ▼
+LangGraph Orchestrator
+     │
+     ├──► Agent A (Claude API) ──┐
+     ├──► Agent B (Claude API) ──┤──► Shared Memory (SQLite + ChromaDB)
+     └──► Agent C (Claude API) ──┘
+     │
+     ▼
+Retry / Failure Handler
+     │
+     ▼
+Streamlit UI  +  GitHub Actions CI (on every push)</div>
+    <div class="cs-stack">
+      <span>LangGraph</span><span>Claude API</span><span>SQLite</span><span>ChromaDB</span><span>Streamlit</span><span>Pytest</span><span>GitHub Actions</span>
+    </div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">Outcome &amp; Honest Limits</div>
+    <p>The orchestration layer is solid — tested, CI-verified, and handles agent failure gracefully. What it doesn't yet do: dynamically add new agent types without a code change, and the ChromaDB recall is tuned for short-to-medium context, not long-running sessions. Both are documented as known limits in the repo rather than glossed over.</p>
+  </div>
+
+  <div class="cs-cta">
+    <a class="cs-btn" href="https://github.com/snehasharmaa912-ops/VibeOps" target="_blank" rel="noopener">View Source ↗</a>
+    <a class="cs-btn ghost" href="index.html#projects">← All Projects</a>
+  </div>
+</div>
+
+<footer class="cs-footer">Sneha Sharma · © 2026</footer>
+</body>
+</html>
