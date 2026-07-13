@@ -754,7 +754,7 @@
 <!-- PROJECTS -->
 <section id="projects">
   <div class="section-frame reveal"><div class="eyebrow">Selected Work</div>
-  <h2 class="title">Three products, <em>shipped</em></h2></div>
+  <h2 class="title">Four products, <em>shipped</em></h2></div>
   <div class="projects-grid">
 
     <div class="project-card tilt reveal" id="cardSheSays">
@@ -835,6 +835,32 @@
       </div>
     </div>
 
+    <div class="project-card tilt reveal" id="cardPayFlow">
+      <div class="card-inner">
+        <div class="card-face front">
+          <div class="p-visual" onclick="document.getElementById('cardPayFlow').classList.toggle('flipped')"><div class="p-index">04</div><div class="p-visual-name">PayFlow v2</div><div class="flip-hint">Tap to flip ⟲</div></div>
+          <div class="p-body">
+            <div class="p-name">PayFlow v2</div>
+            <div class="p-tag">Go · Scala · Ruby · Payments Platform</div>
+            <p class="p-desc">A production-grade payments system built around one rule: money can never appear or disappear. Double-entry ledger bookkeeping, write-ahead logging with on-demand replay verification, and a fail-safe risk engine — plus a concurrency bug I found, reproduced with a genuine 50-request race test, and fixed at the lock-scoping level.</p>
+            <div class="p-stack">
+              <span class="chip">Go</span><span class="chip">Scala</span><span class="chip">Ruby</span>
+              <span class="chip">PostgreSQL</span><span class="chip">Docker</span><span class="chip">HMAC-SHA256</span>
+            </div>
+            <div class="p-links">
+              <a href="payflow.html">Case Study →</a>
+              <a href="https://github.com/snehasharmaa912-ops/PayFlow-v2" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-face back" onclick="document.getElementById('cardPayFlow').classList.toggle('flipped')">
+          <div class="back-label">Why it matters</div>
+          <div class="back-stat">Caught a Real Race Condition</div>
+          <div class="back-note">Found a TOCTOU bug where the same idempotency key could create two charges, wrote a concurrent load test that reproduced it on the first run, then fixed it by collapsing check-and-write into one critical section.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -848,7 +874,7 @@
     <div class="skill-cat reveal">
       <h4>Languages &amp; Core</h4>
       <div class="skill-tags">
-        <span>JavaScript</span><span>Python</span><span>Java</span><span>C++</span><span>OOP</span><span>Data Structures &amp; Algorithms</span>
+        <span>JavaScript</span><span>Python</span><span>Java</span><span>C++</span><span>Go</span><span>Scala</span><span>Ruby</span><span>OOP</span><span>Data Structures &amp; Algorithms</span>
       </div>
     </div>
     <div class="skill-cat reveal reveal-delay-1">
@@ -860,7 +886,7 @@
     <div class="skill-cat reveal reveal-delay-2">
       <h4>AI &amp; Data</h4>
       <div class="skill-tags">
-        <span>LangGraph</span><span>Claude API</span><span>NLP</span><span>TF-IDF</span><span>MongoDB</span><span>SQLite</span><span>ChromaDB</span>
+        <span>LangGraph</span><span>Claude API</span><span>NLP</span><span>TF-IDF</span><span>MongoDB</span><span>PostgreSQL</span><span>SQLite</span><span>ChromaDB</span>
       </div>
     </div>
     <div class="skill-cat reveal">
@@ -872,7 +898,7 @@
     <div class="skill-cat reveal reveal-delay-1">
       <h4>Auth &amp; Testing</h4>
       <div class="skill-tags">
-        <span>JWT</span><span>Pytest</span><span>Postman</span><span>Cloudinary</span>
+        <span>JWT</span><span>HMAC-SHA256</span><span>Idempotency Keys</span><span>Rate Limiting</span><span>Pytest</span><span>Postman</span><span>Cloudinary</span>
       </div>
     </div>
     <div class="skill-cat reveal reveal-delay-2">
