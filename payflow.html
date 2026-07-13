@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayFlow v2 — Case Study | Sneha Sharma</title>
+<link rel="stylesheet" href="casestudy.css">
+</head>
+<body>
+
+<nav class="cs-nav">
+  <div class="brand"><span class="mono">S</span> Sneha Sharma</div>
+  <a class="back" href="index.html#projects">← Back to Portfolio</a>
+</nav>
+
+<div class="cs-wrap">
+  <div class="cs-eyebrow">Case Study · 04</div>
+  <h1 class="cs-title">PayFlow v2</h1>
+  <p class="cs-tag">Money can never just appear or disappear. That's the one rule this whole project is built around.</p>
+
+  <div class="cs-meta">
+    <div>Role<strong>Solo Developer</strong></div>
+    <div>Stack<strong>Go · Scala · Ruby</strong></div>
+    <div>Status<strong>Deployed, -race Tested</strong></div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Problem</div>
+    <p>Most "payment system" projects are basically a charges table with a REST wrapper around it. That's how this one started too — until a real bug turned up: a race condition that let the same idempotency key create two charges instead of one. Everything after that point was built to make sure that kind of failure gets caught by a test, not discovered in production.</p>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Approach</div>
+    <p>Three languages, each doing the job it's actually good at — not picked to show off:</p>
+    <ul>
+      <li><strong>Go</strong> runs the core service, since payment code lives or dies by how it behaves under concurrency</li>
+      <li><strong>Scala</strong> runs the risk engine, where pattern matching over case classes keeps growing rule sets from turning into spaghetti</li>
+      <li><strong>Ruby</strong> runs the CLI, so auditing charges by hand is pleasant instead of reading raw JSON</li>
+      <li>Double-entry ledger bookkeeping — every charge posts a debit and an equal credit, so the whole ledger has a mechanical invariant to check: it must always sum to zero</li>
+      <li>Write-ahead logging, fsync'd before a request returns, with a <code>ReplayFromLog</code> function and a <code>/debug/verify-replay</code> endpoint that rebuilds state from the log and checks it against what's live</li>
+      <li>A fail-safe risk engine — if the Scala service is unreachable or errors out, charges fall back to <code>pending_review</code> instead of silently succeeding or crashing</li>
+      <li>Stripe-style <code>Idempotency-Key</code> header support, bearer-token auth, per-caller token-bucket rate limiting, and HMAC-SHA256-signed webhooks</li>
+    </ul>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">The Bug That Actually Matters Here</div>
+    <p>The first version checked whether an idempotency key had been seen before under a read lock, released it, then wrote the new charge under a separate write lock — a textbook check-then-act race. Every test passed, because every test up to that point ran one request at a time, and a single-threaded test can't prove anything about two requests landing in the same microsecond.</p>
+    <p>So the fix was preceded by a test built specifically to break it: 50 identical requests, same idempotency key, fired genuinely concurrently with goroutines and a WaitGroup. First run, it failed immediately — different callers got back different charge IDs for what should have been one logical charge. The real fix collapsed the check and the write into a single critical section, with the event-log append happening inside that same lock so the log and in-memory state can never disagree about what happened first.</p>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">Architecture</div>
+    <div class="cs-arch">Ruby CLI ──HTTP──► Go Core Service ──stdin/stdout JSON──► Scala Risk Engine
+                              │
+                    ┌─────────┴─────────┐
+                    ▼                   ▼
+           Write-Ahead Log      Double-Entry Ledger
+          (fsync before return)  (debit + credit, sums to zero)
+                    │
+                    ▼
+          /debug/verify-replay  (replay log → compare vs. live state)</div>
+    <div class="cs-stack">
+      <span>Go</span><span>Scala</span><span>Ruby</span><span>PostgreSQL</span><span>Docker</span><span>HMAC-SHA256</span><span>GitHub Actions</span>
+    </div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-h2">Outcome &amp; Honest Limits</div>
+    <p>The concurrency and ledger story is solid: <code>go test ./... -race</code> passes, and it's literally what would have caught the original bug before a load test found it. What's not fully wired up yet: the live deployment's Docker image doesn't build the Scala risk-engine jar or bundle a JRE, so large charges currently fail safe to <code>pending_review</code> rather than getting a real risk score — a known, documented gap rather than a hidden one. Webhooks are implemented and tested but not enabled live, since there's no receiver configured yet.</p>
+  </div>
+
+  <div class="cs-cta">
+    <a class="cs-btn" href="https://github.com/snehasharmaa912-ops/PayFlow-v2" target="_blank" rel="noopener">View Source ↗</a>
+    <a class="cs-btn ghost" href="index.html#projects">← All Projects</a>
+  </div>
+</div>
+
+<footer class="cs-footer">Sneha Sharma · © 2026</footer>
+</body>
+</html>
