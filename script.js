@@ -9,7 +9,7 @@
 
   const milestones = {
     0: { year: '2021', text: "Started Secondary Education at Manava Bharati India International School." },
-    1: { year: '2022', text: "Completed Secondary Education with 87.83% — first real proof that consistency pays off." },
+    1: { year: '2022', text: "Completed Secondary Education with 87.83% — first real proof that consistency pays off and took on the role of Vice - Caption of Takshashila House at school." },
     2: { year: '2023', text: "Began Senior Secondary education in PCM + Computer Science, and took on the role of Discipline Incharge at school." },
     3: { year: '2024', text: "Graduated Senior Secondary with First Division. Started B.Tech in Computer Science & Engineering at Graphic Era Hill University — joined NSS GEHU and Team Aryavart." },
     4: { year: '2025', text: "Earned AWS Cloud Practitioner Essentials (Feb) and the AWS AI Practitioner Learning Plan (Sep) — building a cloud and AI foundation alongside coursework." },
