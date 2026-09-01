@@ -10,6 +10,7 @@ A black-and-gold, single-page luxury portfolio with dedicated case-study pages. 
 ├── shesays.html          # SheSays case study
 ├── atslay.html           # ATSlay case study
 ├── vibeops.html          # VibeOps case study
+├── payflow.html          # PayFlow v2 case study (incl. CI load test & coverage results)
 └── assets/
     ├── hero.jpg                     # hero portrait
     ├── about.jpg                    # about section image
@@ -20,8 +21,10 @@ A black-and-gold, single-page luxury portfolio with dedicated case-study pages. 
 
 **Content**
 - Hero, About (with a personal engineering philosophy), Experience, Projects, Toolkit, Certifications, Education, and Contact sections
-- Three project cards (SheSays, ATSlay, VibeOps), each with a "Case Study →" link to a full dedicated breakdown page (problem, approach, architecture diagram, honest limitations)
-- Downloadable resume — linked from both the nav bar and the Contact section
+- Experience timeline: iOS Trainee Developer (Apple & Infosys, ongoing), AI Intern (Mirai School of Technology), and Full Stack Intern (TBI-GEU)
+- Six project cards — SheSays, ATSlay, VibeOps, and PayFlow v2 each with a "Case Study →" link to a full dedicated breakdown page (problem, approach, architecture diagram, honest limitations); RepJudge and Life-OS link directly to their live deployed apps and source
+- PayFlow v2's case study includes real, CI-verified numbers: k6 load test results (req/s, p95 latency) and test coverage across Go, Ruby, and Scala, all tracked automatically via GitHub Actions on every push
+- Downloadable resume — linked from both the nav bar and the Contact section, kept in sync with the latest version
 
 **Live Data** (fetched fresh on every page load, no redeploy needed)
 - GitHub public repo count
