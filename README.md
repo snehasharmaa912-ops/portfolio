@@ -1,6 +1,6 @@
 # Sneha Sharma — Portfolio
 
-A black-and-gold, single-page luxury portfolio with dedicated case-study pages. Pure HTML/CSS/JS — no build step, no dependencies.
+A blush-pink and white, single-page portfolio with dedicated case-study pages. Pure HTML/CSS/JS — no build step, no dependencies.
 
 ## Structure
 ```
@@ -13,8 +13,7 @@ A black-and-gold, single-page luxury portfolio with dedicated case-study pages. 
 ├── payflow.html          # PayFlow v2 case study (incl. CI load test & coverage results)
 └── assets/
     ├── hero.jpg                     # hero portrait
-    ├── about.jpg                    # about section image
-    └── Sneha_Sharma_Resume.pdf      # downloadable resume
+    └── about.jpg                    # about section image
 ```
 
 ## Features
@@ -24,7 +23,6 @@ A black-and-gold, single-page luxury portfolio with dedicated case-study pages. 
 - Experience timeline: iOS Trainee Developer (Apple & Infosys, ongoing), AI Intern (Mirai School of Technology — built RepJudge and Life-OS during this internship), and Full Stack Intern (TBI-GEU — built VanaVas, a homestay booking platform)
 - Four project cards — SheSays, ATSlay, VibeOps, and PayFlow v2 — each with a "Case Study →" link to a full dedicated breakdown page (problem, approach, architecture diagram, honest limitations)
 - PayFlow v2's case study includes real, CI-verified numbers: k6 load test results (req/s, p95 latency) and test coverage across Go, Ruby, and Scala, all tracked automatically via GitHub Actions on every push
-- Downloadable resume — linked from both the nav bar and the Contact section, kept in sync with the latest version
 
 **Live Data** (fetched fresh on every page load, no redeploy needed)
 - GitHub public repo count
@@ -34,9 +32,9 @@ A black-and-gold, single-page luxury portfolio with dedicated case-study pages. 
 **Animation**
 - Wax-seal splash intro that draws, cracks open with a shockwave burst, then reveals the page
 - Typewriter effect on the hero tagline
-- Custom gold cursor with magnetic hover on buttons and a glowing gold-dust trail
-- Ambient drifting gold particle field across the whole page
-- Parallax depth — floating gold rings/diamonds move at different scroll speeds in Hero and About
+- Custom pink cursor with magnetic hover on buttons and a glowing pink-dust trail
+- Ambient drifting pink particle field across the whole page
+- Parallax depth — floating pink rings/diamonds move at different scroll speeds in Hero and About
 - Scroll-drawn corner brackets around each section title as you scroll to it
 - 3D flip project cards — tap the image to flip and reveal a "why it matters" highlight
 
